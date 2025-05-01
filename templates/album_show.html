@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Music Library</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Album</h1>
+    <p class="t-title">Title: {{album.title}}</p>
+    <p class="t-release-year">Release year: {{album.release_year}}</p>
+    <p class="t-artist-name">Artist: {{artist.name}}</p>
+
+    <!-- This is a link to another page. -->
+    <!-- The browser will send `GET /albums` when the user clicks this -->
+    <a href="/albums">Back to all albums</a>
+  </body>
+</html>
