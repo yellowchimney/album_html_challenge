@@ -56,10 +56,27 @@ def create_album():
 def get_artists():
     connection = get_flask_database_connection(app)
     repository = ArtistRepository(connection)
+    artists = repository.all()
+    return render_template("artists.html", artists=artists)
 
-    return "\n".join([
-            str(artist) for artist in repository.all()
-        ])
+@app.route('/artists/<int:id>', methods=['GET'])
+def get_artist_by_id(id):
+    connection = get_flask_database_connection(app)
+    art_repository = ArtistRepository(connection)
+    try:
+        print("Finding artist...")
+        artist = art_repository.find(id)
+        print("Artist found:", artist)
+
+        alb_repository = AlbumRepository(connection)
+        print("Finding albums...")
+        albums = alb_repository.find_by_artist(id)
+        print("Albums found:", albums)
+    
+        return render_template("artist_show.html", artist=artist, albums=albums)
+
+    except Exception as e:
+        return render_template("artist_error.html", error=str(e))
 
 @app.route('/artists', methods=['POST'])
 def post_artists():
